@@ -49,14 +49,12 @@ button.onclick = async () => {
 
     deepai.setApiKey(apiKeys[Math.floor(Math.random() * apiKeys.length)]);
 
-    try {
-        deepai.callStandardApi("text2img", {
-            text: `${prefix} ${title}`,
-        }).then((aiResponse) => {
-            imageArea.src = aiResponse["output_url"];
-        })
-    } catch {
+    deepai.callStandardApi("text2img", {
+        text: `${prefix} ${title}`,
+    }).then((aiResponse) => {
+        imageArea.src = aiResponse["output_url"];
+    }).catch(() => {
         console.error("Whoops");
         imageArea.src = "";
-    }
+    });
 }
