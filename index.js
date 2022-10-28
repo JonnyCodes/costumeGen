@@ -48,8 +48,15 @@ button.onclick = async () => {
     costumeIdea.innerHTML = `<a href="https://en.wikipedia.org/wiki/${title}">${prefix} ${title}</a>`;
 
     deepai.setApiKey(apiKeys[Math.floor(Math.random() * apiKeys.length)]);
-    const aiResponse = await deepai.callStandardApi("text2img", {
-        text: `${prefix} ${title}`,
-    });
-    imageArea.src = aiResponse["output_url"];
+
+    try {
+        deepai.callStandardApi("text2img", {
+            text: `${prefix} ${title}`,
+        }).then((aiResponse) => {
+            imageArea.src = aiResponse["output_url"];
+        })
+    } catch {
+        console.error("Whoops");
+        imageArea.src = "";
+    }
 }
